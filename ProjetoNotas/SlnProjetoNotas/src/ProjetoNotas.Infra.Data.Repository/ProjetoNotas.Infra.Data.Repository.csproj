@@ -22,8 +22,6 @@
 
   <ItemGroup>
     <Folder Include="Context\" />
-    <Folder Include="IRepositories\" />
-    <Folder Include="IRepository\" />
   </ItemGroup>
 
 </Project>
