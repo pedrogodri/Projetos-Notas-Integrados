@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using ProjetoNotas.Application.Service.SQLServices;
 using ProjetoNotas.Domain.Interfaces.IRepository;
 using ProjetoNotas.Domain.Interfaces.IService;
 using ProjetoNotas.Infra.Data.Repository.Context;
@@ -24,8 +25,8 @@ builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<INoteRepository, NoteRepository>();
 
 // Services
-/*builder.Services.AddScoped<INoteService, NoteService>();
-builder.Services.AddScoped<IUserService, UserService>();*/
+builder.Services.AddScoped<INoteService, NoteService>();
+builder.Services.AddScoped<IUserService, UserService>();
 
 var app = builder.Build();
 

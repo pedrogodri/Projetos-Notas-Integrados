@@ -22,6 +22,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\ProjetoNotas.Application.Service\ProjetoNotas.Application.Service.csproj" />
     <ProjectReference Include="..\ProjetoNotas.Infra.Data.Repository\ProjetoNotas.Infra.Data.Repository.csproj" />
   </ItemGroup>
 
