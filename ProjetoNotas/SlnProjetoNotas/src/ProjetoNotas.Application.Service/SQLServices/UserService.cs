@@ -16,7 +16,7 @@ namespace ProjetoNotas.Application.Service.SQLServices
         {
             _repository = repository;
         }
-        public Task<int> Delete(UserDTO entity)
+        public async Task<int> Delete(UserDTO entity)
         {
             throw new NotImplementedException();
         }
@@ -26,22 +26,30 @@ namespace ProjetoNotas.Application.Service.SQLServices
             return _repository.FindAll()
                 .Select(user => new UserDTO
                 {
-                    Id = user.Id,
-                    Name = user.Name,
-                    Login = user.Login,
-                    Password = user.Password,
+                    id = user.Id,
+                    name = user.Name,
+                    login = user.Login,
+                    password = user.Password,
                 })
                 .ToList();
         }
 
-        public Task<UserDTO> FindById(int id)
+        public async Task<UserDTO> FindById(int id)
         {
-            throw new NotImplementedException();
+            var dto = new UserDTO();
+            return dto.mapToDTO(await _repository.FindById(id));
         }
 
         public Task<int> Save(UserDTO entity)
         {
-            throw new NotImplementedException();
+            if (entity.id > 0)
+            {
+                return _repository.Update(entity.mapToEntity());
+            }
+            else
+            {
+                return _repository.Save(entity.mapToEntity());
+            }
         }
 
         public Task<int> Update(UserDTO entity)

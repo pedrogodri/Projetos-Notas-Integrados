@@ -1,4 +1,5 @@
 ﻿using ProjetoNotas.Domain.DTO;
+using ProjetoNotas.Domain.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,11 +10,34 @@ namespace ProjetoNotas.Domain.DTO
 {
     public class UserDTO
     {
-        public int Id { get; set; }
-        public string Name { get; set; }
-        public string Login { get; set; }
-        public string Password { get; set; }
+        public int id { get; set; }
+        public string name { get; set; }
+        public string login { get; set; }
+        public string password { get; set; }
+        public virtual ICollection<NoteDTO>? notes { get; set; }
 
-        public virtual ICollection<NoteDTO>? Notes { get; set; }
+        public User mapToEntity()
+        {
+            return new User()
+            {
+                Id = id,
+                Name = name,
+                Login = login,
+                Password = password,
+                /*Notes = notes,*/
+            };
+        }
+
+        public UserDTO mapToDTO(User user)
+        {
+            return new UserDTO()
+            {
+                id = user.Id,
+                name = user.Name,
+                login = user.Login,
+                password = user.Password,
+                /*notes = user.Notes,*/
+            };
+        }
     }
 }
