@@ -1,4 +1,6 @@
 ﻿using ProjetoNotas.Domain.DTO;
+using ProjetoNotas.Domain.Entities;
+using ProjetoNotas.Domain.Interfaces.IRepository;
 using ProjetoNotas.Domain.Interfaces.IService;
 using System;
 using System.Collections.Generic;
@@ -10,6 +12,11 @@ namespace ProjetoNotas.Application.Service.SQLServices
 {
     public class NoteService : INoteService
     {
+        private readonly INoteRepository _repository;
+        public NoteService(INoteRepository repository)
+        {
+            _repository = repository;
+        }
         public Task<int> Delete(NoteDTO entity)
         {
             throw new NotImplementedException();
@@ -17,7 +24,18 @@ namespace ProjetoNotas.Application.Service.SQLServices
 
         public List<NoteDTO> FindAll()
         {
-            throw new NotImplementedException();
+            return _repository.FindAll()
+                .Select(note => new NoteDTO
+                {
+                    Id = note.Id,
+                    Title = note.Title,
+                    Description = note.Description,
+                    Category = note.Category,
+                    Fixed = note.Fixed,
+                    TimeNote = note.TimeNote,
+                    User = note.User,
+                })
+                .ToList();
         }
 
         public Task<NoteDTO> FindById(int id)

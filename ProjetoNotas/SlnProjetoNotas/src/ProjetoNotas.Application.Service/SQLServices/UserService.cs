@@ -1,4 +1,5 @@
 ﻿using ProjetoNotas.Domain.DTO;
+using ProjetoNotas.Domain.Interfaces.IRepository;
 using ProjetoNotas.Domain.Interfaces.IService;
 using System;
 using System.Collections.Generic;
@@ -10,6 +11,11 @@ namespace ProjetoNotas.Application.Service.SQLServices
 {
     public class UserService : IUserService
     {
+        private readonly IUserRepository _repository;
+        public UserService(IUserRepository repository) 
+        {
+            _repository = repository;
+        }
         public Task<int> Delete(UserDTO entity)
         {
             throw new NotImplementedException();
@@ -17,7 +23,15 @@ namespace ProjetoNotas.Application.Service.SQLServices
 
         public List<UserDTO> FindAll()
         {
-            throw new NotImplementedException();
+            return _repository.FindAll()
+                .Select(user => new UserDTO
+                {
+                    Id = user.Id,
+                    Name = user.Name,
+                    Login = user.Login,
+                    Password = user.Password,
+                })
+                .ToList();
         }
 
         public Task<UserDTO> FindById(int id)
