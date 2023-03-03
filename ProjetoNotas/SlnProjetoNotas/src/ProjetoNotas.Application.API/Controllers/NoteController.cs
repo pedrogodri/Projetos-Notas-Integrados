@@ -1,31 +1,19 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using ProjetoNotas.Domain.DTO;
+﻿using Microsoft.AspNetCore.Mvc;
 using ProjetoNotas.Domain.Interfaces.IService;
 
 namespace ProjetoNotas.Application.API.Controllers
 {
-    [Route("api/[controller]")]
-    [ApiController]
-    public class NoteController : ControllerBase
+    public class NoteController : Controller
     {
         private readonly INoteService _service;
-
         public NoteController(INoteService service)
         {
-            _service = service;
+            this._service = service;
         }
-
-        [HttpGet]
-        public List<NoteDTO> GetUsers()
+        public JsonResult Index()
         {
-            return _service.FindAll();
-        }
-
-        [HttpGet("{id}")]
-        public Task<NoteDTO> GetUser(int id)
-        {
-            return _service.FindById(id);
+            var listNotesUser = _service.FindAll();
+            return Json(listNotesUser);
         }
     }
 }
