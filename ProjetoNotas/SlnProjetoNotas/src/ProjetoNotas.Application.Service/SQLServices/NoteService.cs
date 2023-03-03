@@ -27,25 +27,33 @@ namespace ProjetoNotas.Application.Service.SQLServices
             return _repository.FindAll()
                 .Select(note => new NoteDTO
                 {
-                    Id = note.Id,
-                    Title = note.Title,
-                    Description = note.Description,
-                    Category = note.Category,
-                    Fixed = note.Fixed,
-                    TimeNote = note.TimeNote,
-                    User = note.User,
+                    id = note.Id,
+                    title = note.Title,
+                    description = note.Description,
+                    category = note.Category,
+                    fixeded = note.Fixed,
+                    timeNote = note.TimeNote,
+                    user = note.User,
                 })
                 .ToList();
         }
 
-        public Task<NoteDTO> FindById(int id)
+        public async Task<NoteDTO> FindById(int id)
         {
-            throw new NotImplementedException();
+            var dto = new NoteDTO();
+            return dto.mapToDTO(await _repository.FindById(id));
         }
 
         public Task<int> Save(NoteDTO entity)
         {
-            throw new NotImplementedException();
+            if (entity.id > 0)
+            {
+                return _repository.Update(entity.mapToEntity());
+            }
+            else
+            {
+                return _repository.Save(entity.mapToEntity());
+            }
         }
 
         public Task<int> Update(NoteDTO entity)
